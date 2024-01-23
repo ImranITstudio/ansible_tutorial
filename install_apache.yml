@@ -3,44 +3,20 @@
 - hosts: all
   become: true
   tasks:
-  - name: update repository index
+  - name: install apache2  and php package for Ubuntu 
     apt:
-      update_cache: yes
-    when: ansible_distribution == "Ubuntu"    
-  - name: install apache2 package
-    apt:
-      name: apache2
+      name: 
+        - apache2
+        - libapache2-mod-php
       state: latest  
-    when: ansible_distribution == "Ubuntu"    
-  - name: install apache2 support php
-    apt: 
-      name: libapache2-mod-php
-      state: latest
-        # Just for one distribution  
-        # when: ansible_distribtution == "Ubuntu"
-        # If we want to declare for multiple distribution for same kernel 
-    when: ansible_distribution in ["Debian","Ubuntu"] 
+      update_cache: yes  
+    when: ansible_distribtuion == "Ubuntu"
 
----
+      name: install httpd and php package for apache 
+        - httpd
+        - php
+      state: latest
+      update_cache: yes    
+    when: ansible_distribtuion == "CentOS"    
 
-- hosts: all
-  become: true
-  tasks:
-  - name: update repository index
-    apt:
-      update_cache: yes
-    when: ansible_distribution == "Ubuntu"
-  - name: install apache2 package
-    apt:
-      name: apache2
-      state: latest
-    when: ansible_distribution == "Ubuntu"
-  - name: install apache2 support php
-    apt:
-      name: libapache2-mod-php
-      state: latest
-        # Just for one distribution
-        # when: ansible_distribtution == "Ubuntu"
-        # If we want to declare for multiple distribution for same kernel
-    when: ansible_distribution in ["Debian","Ubuntu"]
 
